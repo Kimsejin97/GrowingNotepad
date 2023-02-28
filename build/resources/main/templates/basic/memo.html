@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/blog.css}"
+          href="../css/blog.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<!--    <h2 th:if=${param.status}" th:text="'저장 완료!'"></h2>-->
+    <br>
+    <article class="blog-post">
+        <h2 class="blog-post-title mb-1" th:text="${memo.title}">타이틀</h2>
+        <p class="blog-post-meta" th:text="${#temporals.format(memo.postTime,'yyyy-MM-dd HH:mm:ss')}">게시일</p>
+        <hr>
+        <p th:text="${memo.text}">본문내용</p>
+    </article>
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg"
+                    onclick="location.href='editForm.html'"
+                    th:onclick="|location.href='@{/basic/memo/{memoId}/edit(memoId=${memo.id})}'|"
+                    type="button">메모 수정</button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
+                    onclick="location.href='memoList.html'"
+                    th:onclick="|location.href='@{/basic/memoList}'|"
+                    type="button">목록으로</button>
+        </div>
+    </div>
+</div>
+<footer class="blog-footer">
+    <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+    <p>
+        <a href="#">Back to top</a>
+    </p>
+</footer>
+</body>
+</html>
