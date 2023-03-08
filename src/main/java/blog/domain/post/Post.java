@@ -1,5 +1,6 @@
-package blog.domain;
+package blog.domain.post;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,8 +11,12 @@ public class Post {
 
     private Long id;
 
+    private String writer;
+
+    @NotEmpty
     private String title;
 
+    @NotEmpty
     private String context;
 
     private LocalDateTime postTime;

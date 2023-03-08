@@ -1,6 +1,5 @@
-package blog.Repository;
+package blog.domain.post;
 
-import blog.domain.Post;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -40,6 +39,8 @@ public class PostRepository {
         findPost.setContext(Param.getContext());
         findPost.setPostTime(LocalDateTime.now());
     }
+
+    //delete TODO
 
     //clear
     public void clear(){

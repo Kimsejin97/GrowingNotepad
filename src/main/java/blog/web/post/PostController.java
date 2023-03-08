@@ -1,29 +1,19 @@
-package blog.controller;
+package blog.web.post;
 
-import blog.domain.Post;
-import blog.Repository.PostRepository;
-import jakarta.annotation.PostConstruct;
+import blog.domain.post.Post;
+import blog.domain.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 @Controller
 @RequiredArgsConstructor
-public class BasicController {
+public class PostController {
     private final PostRepository postRepository;
 
-    @GetMapping("/blog/home")
-    public String posts(Model model){
-        List<Post> posts = postRepository.findAll();
-        model.addAttribute("posts", posts);
-        return "home";
-    }
-
+    //상세
     @GetMapping("/blog/post/{postId}")
     public String post(@PathVariable Long postId, Model model){
         Post post = postRepository.findById(postId);
@@ -31,6 +21,7 @@ public class BasicController {
         return "post/post";
     }
 
+    //저장
     @GetMapping("/blog/add")
     public String addPostOpen(){
         return "post/addPost";
@@ -44,6 +35,7 @@ public class BasicController {
         return "redirect:/blog/post/{postId}";
     }
 
+    //수정
     @GetMapping("/blog/post/{postId}/edit")
     public String editPostOpen(@PathVariable Long postId,Model model){
         Post post = postRepository.findById(postId);
@@ -56,14 +48,5 @@ public class BasicController {
                            @ModelAttribute Post post){
         postRepository.update(postId,post);
         return "redirect:/blog/post/{postId}";
-    }
-
-    @PostConstruct
-    public void init(){
-        postRepository.save(new Post("새로운 메모를 만들어보세요", "다양한 글을 저장해보세요.", LocalDateTime.now()));
-        postRepository.save(new Post("새로운 메모를 만들어보세요", "다양한 글을 저장해보세요.", LocalDateTime.now()));
-        postRepository.save(new Post("새로운 메모를 만들어보세요", "다양한 글을 저장해보세요.", LocalDateTime.now()));
-        postRepository.save(new Post("새로운 메모를 만들어보세요", "다양한 글을 저장해보세요.", LocalDateTime.now()));
-
     }
 }
