@@ -1,4 +1,4 @@
-package blog.web.argumentresolver;
+package blog.web.login.argumentresolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

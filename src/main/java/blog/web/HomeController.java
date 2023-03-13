@@ -3,7 +3,7 @@ package blog.web;
 import blog.domain.member.Member;
 import blog.domain.post.Post;
 import blog.domain.post.PostRepository;
-import blog.web.argumentresolver.Login;
+import blog.web.login.argumentresolver.Login;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

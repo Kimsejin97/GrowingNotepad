@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Enumeration;
+
 import static java.rmi.server.LogStream.log;
 
 @Slf4j
@@ -45,6 +47,8 @@ public class LoginController {
         //로그인 성공
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+        Object test = session.getAttribute(SessionConst.LOGIN_MEMBER);
+        log.info(String.valueOf(test));
         return "redirect:/blog/home";
     }
 

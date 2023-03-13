@@ -1,4 +1,4 @@
-package blog.web.interceptor;
+package blog.web.login.interceptor;
 
 import blog.web.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;

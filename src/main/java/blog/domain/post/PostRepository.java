@@ -1,5 +1,8 @@
 package blog.domain.post;
 
+import blog.domain.member.Member;
+import blog.domain.member.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -9,6 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
+@RequiredArgsConstructor
 public class PostRepository {
 
     private static final Map<Long, Post> store = new ConcurrentHashMap<>();

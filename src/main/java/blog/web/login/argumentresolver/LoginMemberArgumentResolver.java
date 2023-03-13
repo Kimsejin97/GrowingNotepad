@@ -1,4 +1,4 @@
-package blog.web.argumentresolver;
+package blog.web.login.argumentresolver;
 
 import blog.domain.member.Member;
 import blog.web.SessionConst;
