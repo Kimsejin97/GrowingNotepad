@@ -23,17 +23,29 @@
         <hr>
         <div id="quill-viewer" th:text="${post.context}" style="height:500px;">본문내용</div>
     </article>
-
-    <div class="row">
+    <br>
+    <div class="row" th:if="${edit}">
         <div class="col">
-            <button th:if="${edit}"
-                    class="w-100 btn btn-primary btn-lg"
+            <button class="w-100 btn btn-primary btn-lg"
                     th:onclick="|location.href='@{/blog/post/{postId}/edit(postId=${post.id})}'|"
                     onclick="location.href='editForm.html'"
                     type="button">메모 수정</button>
         </div>
         <div class="col">
+            <button class="w-100 btn btn-primary btn-lg"
+                    th:onclick="|location.href='@{/blog/post/{postId}/delete(postId=${post.id})}'|"
+                    type="button">메모 삭제</button>
+        </div>
+        <div class="col">
             <button class="w-100 btn btn-secondary btn-lg"
+                    th:onclick="|location.href='@{/blog/home}'|"
+                    onclick="location.href='../home.html'"
+                    type="button">목록으로</button>
+        </div>
+    </div>
+    <div class="row" th:unless="${edit}">
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg"
                     th:onclick="|location.href='@{/blog/home}'|"
                     onclick="location.href='../home.html'"
                     type="button">목록으로</button>

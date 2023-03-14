@@ -45,6 +45,7 @@ public class PostRepository {
     }
 
     //delete TODO
+    public void deleteById(Long id) { store.remove(id); }
 
     //clear
     public void clear(){

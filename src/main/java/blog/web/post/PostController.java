@@ -66,4 +66,12 @@ public class PostController {
         postRepository.update(postId,post);
         return "redirect:/blog/post/{postId}";
     }
+
+    //삭제
+    @GetMapping("/blog/post/{postId}/delete")
+    public String deletePost(@PathVariable Long postId,Model model){
+        postRepository.deleteById(postId);
+        model.addAttribute("deleteStatus", true);
+        return "redirect:/blog/home";
+    }
 }
