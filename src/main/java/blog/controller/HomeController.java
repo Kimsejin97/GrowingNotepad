@@ -1,9 +1,9 @@
-package blog.web;
+package blog.controller;
 
-import blog.domain.member.Member;
-import blog.domain.post.Post;
-import blog.domain.post.PostRepository;
-import blog.web.login.argumentresolver.Login;
+import blog.domain.model.Member;
+import blog.domain.model.Post;
+import blog.domain.repository.PostRepository;
+import blog.config.argumentresolver.Login;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

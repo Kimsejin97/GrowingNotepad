@@ -1,7 +1,7 @@
-package blog.web.login.argumentresolver;
+package blog.config.argumentresolver;
 
-import blog.domain.member.Member;
-import blog.web.SessionConst;
+import blog.domain.model.Member;
+import blog.constants.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;

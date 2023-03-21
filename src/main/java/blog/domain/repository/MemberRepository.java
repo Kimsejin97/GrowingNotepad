@@ -1,5 +1,6 @@
-package blog.domain.member;
+package blog.domain.repository;
 
+import blog.domain.model.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 

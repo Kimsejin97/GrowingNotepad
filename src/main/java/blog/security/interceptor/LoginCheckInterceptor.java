@@ -1,6 +1,6 @@
-package blog.web.login.interceptor;
+package blog.security.interceptor;
 
-import blog.web.SessionConst;
+import blog.constants.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;

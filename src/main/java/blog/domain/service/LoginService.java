@@ -1,7 +1,7 @@
-package blog.domain.login;
+package blog.domain.service;
 
-import blog.domain.member.Member;
-import blog.domain.member.MemberRepository;
+import blog.domain.model.Member;
+import blog.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

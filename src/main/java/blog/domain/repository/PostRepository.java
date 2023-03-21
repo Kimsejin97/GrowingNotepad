@@ -1,7 +1,6 @@
-package blog.domain.post;
+package blog.domain.repository;
 
-import blog.domain.member.Member;
-import blog.domain.member.MemberRepository;
+import blog.domain.model.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

@@ -1,9 +1,9 @@
-package blog.web.member;
+package blog.controller;
 
-import blog.domain.login.LoginService;
-import blog.domain.member.Member;
-import blog.domain.member.MemberRepository;
-import blog.web.SessionConst;
+import blog.domain.service.LoginService;
+import blog.domain.model.Member;
+import blog.domain.repository.MemberRepository;
+import blog.constants.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;

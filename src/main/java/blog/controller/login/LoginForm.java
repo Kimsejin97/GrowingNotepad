@@ -1,4 +1,4 @@
-package blog.web.login;
+package blog.controller.login;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;

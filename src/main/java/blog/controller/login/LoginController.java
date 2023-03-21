@@ -1,8 +1,8 @@
-package blog.web.login;
+package blog.controller.login;
 
-import blog.domain.login.LoginService;
-import blog.domain.member.Member;
-import blog.web.SessionConst;
+import blog.domain.service.LoginService;
+import blog.domain.model.Member;
+import blog.constants.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -13,11 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Enumeration;
-
-import static java.rmi.server.LogStream.log;
 
 @Slf4j
 @Controller

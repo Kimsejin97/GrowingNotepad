@@ -1,7 +1,7 @@
-package blog;
+package blog.config;
 
-import blog.web.login.argumentresolver.LoginMemberArgumentResolver;
-import blog.web.login.interceptor.LoginCheckInterceptor;
+import blog.config.argumentresolver.LoginMemberArgumentResolver;
+import blog.security.interceptor.LoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

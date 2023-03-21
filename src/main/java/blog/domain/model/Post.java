@@ -1,7 +1,6 @@
-package blog.domain.post;
+package blog.domain.model;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,10 +1,10 @@
 package blog;
 
-import blog.domain.member.Member;
-import blog.domain.member.MemberRepository;
-import blog.domain.post.Post;
-import blog.domain.post.PostRepository;
-import jakarta.annotation.PostConstruct;
+import blog.domain.model.Member;
+import blog.domain.repository.MemberRepository;
+import blog.domain.model.Post;
+import blog.domain.repository.PostRepository;
+import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +20,7 @@ public class TestDataInit {
     /**
      * 테스트용 데이터 추가
      */
-    @PostConstruct
+    @PreDestroy
     public void init(){
 
         Member member = new Member();
