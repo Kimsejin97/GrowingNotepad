@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blog.domain.repository.PostMapper">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into post(writer, title, context, post_time)
+        values (#{writer}, #{title}, #{context}, #{postTime})
+    </insert>
+
+    <update id="update">
+        update post
+        set  writer=#{updateParam.writer},
+             title=#{updateParam.title},
+             context=#{updateParam.context},
+             post_time=#{updateParam.postTime}
+        where id=#{id}
+    </update>
+
+    <delete id="clear">
+        truncate table post
+    </delete>
+
+    <delete id="deleteById">
+        delete from post where id=#{id}
+    </delete>
+
+    <select id="findById" resultType="Post">
+        select id, writer, title, context, post_time
+        from post
+        where id=#{id}
+    </select>
+
+    <select id="findAll" resultType="Post">
+        select id, writer, title, context, post_time
+        from post
+    </select>
+
+</mapper>

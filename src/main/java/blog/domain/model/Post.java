@@ -1,12 +1,13 @@
 package blog.domain.model;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter @Setter
+@Data
 public class Post {
 
     private Long id;
@@ -23,7 +24,7 @@ public class Post {
 
     public Post(){}
 
-    public Post(String title, String context, LocalDateTime postTime) {
+    public Post(String writer,String title, String context, LocalDateTime postTime) {
         this.writer = writer;
         this.title = title;
         this.context = context;

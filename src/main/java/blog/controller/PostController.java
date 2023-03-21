@@ -2,8 +2,8 @@ package blog.controller;
 
 import blog.domain.model.Member;
 import blog.domain.model.Post;
-import blog.domain.repository.PostRepository;
 import blog.config.argumentresolver.Login;
+import blog.domain.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,12 +19,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequiredArgsConstructor
 public class PostController {
-    private final PostRepository postRepository;
+    private final PostService postService;
 
     //상세
     @GetMapping("/blog/post/{postId}")
     public String post(@PathVariable Long postId, Model model, @Login Member loginMember){
-        Post post = postRepository.findById(postId);
+        Post post = postService.findById(postId);
         if (loginMember.getName() == post.getWriter()) {
             model.addAttribute("edit", true);
         }
@@ -46,7 +46,7 @@ public class PostController {
         String writer = loginMember.getName();
         post.setWriter(writer);
 
-        Post savePost = postRepository.save(post);
+        Post savePost = postService.save(post);
         redirectAttributes.addAttribute("postId", savePost.getId());
         redirectAttributes.addAttribute("status", true);
         return "redirect:/blog/post/{postId}";
@@ -55,7 +55,7 @@ public class PostController {
     //수정
     @GetMapping("/blog/post/{postId}/edit")
     public String editPostOpen(@PathVariable Long postId,Model model){
-        Post post = postRepository.findById(postId);
+        Post post = postService.findById(postId);
         model.addAttribute("post",post);
         return "post/editPost";
     }
@@ -63,14 +63,14 @@ public class PostController {
     @PostMapping("/blog/post/{postId}/edit")
     public String editPost(@PathVariable Long postId,
                            @ModelAttribute Post post){
-        postRepository.update(postId,post);
+        postService.update(postId,post);
         return "redirect:/blog/post/{postId}";
     }
 
     //삭제
     @GetMapping("/blog/post/{postId}/delete")
     public String deletePost(@PathVariable Long postId,Model model){
-        postRepository.deleteById(postId);
+        postService.deleteById(postId);
         model.addAttribute("deleteStatus", true);
         return "redirect:/blog/home";
     }

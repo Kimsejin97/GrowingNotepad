@@ -2,8 +2,8 @@ package blog.controller;
 
 import blog.domain.model.Member;
 import blog.domain.model.Post;
-import blog.domain.repository.PostRepository;
 import blog.config.argumentresolver.Login;
+import blog.domain.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final PostRepository postRepository;
+    private final PostService postService;
 
     @GetMapping("/blog/home")
     public String posts(@Login Member loginMember, Model model) {
@@ -24,7 +24,7 @@ public class HomeController {
             return "redirect:/blog/visitorHome";
         }
         //세션이 유지되면 로그인으로 이동
-        List<Post> posts = postRepository.findAll();
+        List<Post> posts = postService.findAll();
         model.addAttribute("posts", posts);
         model.addAttribute("member", loginMember);
         return "home";
@@ -32,7 +32,7 @@ public class HomeController {
 
     @GetMapping("/blog/visitorHome")
     public String visitor(Model model) {
-        List<Post> posts = postRepository.findAll();
+        List<Post> posts = postService.findAll();
         model.addAttribute("posts", posts);
         return "visitorHome";
     }
