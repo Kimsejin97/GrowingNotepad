@@ -1,6 +1,6 @@
 package blog.controller.login;
 
-import blog.domain.service.LoginService;
+import blog.service.LoginService;
 import blog.domain.model.Member;
 import blog.constants.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;

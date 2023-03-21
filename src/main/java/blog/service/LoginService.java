@@ -1,4 +1,4 @@
-package blog.domain.service;
+package blog.service;
 
 import blog.domain.model.Member;
 import blog.domain.repository.MemberRepository;

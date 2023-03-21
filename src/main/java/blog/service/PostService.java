@@ -1,52 +1,61 @@
-package blog.domain.service;
+package blog.service;
 
+import blog.config.CurrentSessionLogin;
+import blog.config.argumentresolver.Login;
+import blog.domain.model.Member;
 import blog.domain.model.Post;
+import blog.domain.model.dto.UpdatePostDto;
 import blog.domain.repository.PostMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class PostServiceImpl implements PostService{
+@Slf4j
+public class PostService {
 
     private final PostMapper postMapper;
+//    private final CurrentSessionLogin currentSessionLogin;
 
-    @Override
     public Post save(Post post) {
-        return postMapper.save(post);
+        if (postMapper.save(post) == 1) {
+//            Member sessionLogin = (Member) currentSessionLogin.sessionLogin();
+//            String writer = sessionLogin.getName();
+//            post.setWriter(writer);
+            return post;
+        } else {
+           throw new IllegalArgumentException();
+        }
     }
 
-    @Override
-    public void update(long id, Post updateParam) {
+    public void update(long id, UpdatePostDto updateParam) {
         Post post = postMapper.findById(id);
         post.setTitle(updateParam.getTitle());
         post.setContext(updateParam.getContext());
         post.setPostTime(LocalDateTime.now());
-        postMapper.update(id, post);
+        if (postMapper.update(id, post) != 1) {
+            throw new IllegalArgumentException();
+        }
     }
 
-    @Override
     public void deleteById(long id) {
         postMapper.deleteById(id);
     }
 
-    @Override
     public void clear() {
         postMapper.clear();
     }
 
-    @Override
     public Post findById(long id) {
         return postMapper.findById(id);
     }
 
-    @Override
     public List<Post> findAll() {
         return postMapper.findAll();
     }

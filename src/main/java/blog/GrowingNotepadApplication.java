@@ -1,15 +1,10 @@
 package blog;
 
-import blog.domain.repository.MemberRepository;
-import blog.domain.service.PostService;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@MapperScan("blog.domain.repository")
 public class GrowingNotepadApplication {
 
 	public static void main(String[] args) {

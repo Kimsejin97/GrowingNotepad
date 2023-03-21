@@ -11,10 +11,10 @@ import java.util.List;
 @Mapper
 public interface PostMapper {
 
-    Post save(Post post);
-    void update(@Param("id") Long id, @Param("updateParam") Post updateParam);
-    void deleteById(Long id);
-    void clear();
+    int save(Post post);
+    int update(@Param("id") Long id, @Param("updateParam") Post updateParam);
+    int deleteById(Long id);
+    int clear();
     Post findById(Long id);
     List<Post> findAll();
 

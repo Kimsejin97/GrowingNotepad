@@ -3,12 +3,15 @@ package blog.controller;
 import blog.domain.model.Member;
 import blog.domain.model.Post;
 import blog.config.argumentresolver.Login;
-import blog.domain.service.PostService;
+import blog.domain.model.dto.RequestPostDto;
+import blog.domain.model.dto.UpdatePostDto;
+import blog.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,12 +43,17 @@ public class PostController {
 
     @PostMapping("/blog/add")
     public String addPost(@Valid @ModelAttribute("post") Post post,
+                          BindingResult bindingResult,
                           @Login Member loginMember,
                           RedirectAttributes redirectAttributes) {
 
         String writer = loginMember.getName();
         post.setWriter(writer);
 
+        if(bindingResult.hasErrors()){
+            log.info("errors={}", bindingResult);
+            return "post/addPost";
+        }
         Post savePost = postService.save(post);
         redirectAttributes.addAttribute("postId", savePost.getId());
         redirectAttributes.addAttribute("status", true);
@@ -62,7 +70,7 @@ public class PostController {
 
     @PostMapping("/blog/post/{postId}/edit")
     public String editPost(@PathVariable Long postId,
-                           @ModelAttribute Post post){
+                           @ModelAttribute UpdatePostDto post){
         postService.update(postId,post);
         return "redirect:/blog/post/{postId}";
     }

@@ -1,6 +1,6 @@
 package blog.controller;
 
-import blog.domain.service.LoginService;
+import blog.service.LoginService;
 import blog.domain.model.Member;
 import blog.domain.repository.MemberRepository;
 import blog.constants.SessionConst;

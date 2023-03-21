@@ -3,7 +3,7 @@ package blog.controller;
 import blog.domain.model.Member;
 import blog.domain.model.Post;
 import blog.config.argumentresolver.Login;
-import blog.domain.service.PostService;
+import blog.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
