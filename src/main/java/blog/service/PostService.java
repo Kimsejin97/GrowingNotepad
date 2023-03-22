@@ -1,7 +1,6 @@
 package blog.service;
 
 import blog.config.CurrentSessionLogin;
-import blog.config.argumentresolver.Login;
 import blog.domain.model.Member;
 import blog.domain.model.Post;
 import blog.domain.model.dto.UpdatePostDto;
@@ -21,13 +20,14 @@ import java.util.List;
 public class PostService {
 
     private final PostMapper postMapper;
-//    private final CurrentSessionLogin currentSessionLogin;
+    private final CurrentSessionLogin currentSessionLogin;
 
     public Post save(Post post) {
         if (postMapper.save(post) == 1) {
-//            Member sessionLogin = (Member) currentSessionLogin.sessionLogin();
-//            String writer = sessionLogin.getName();
-//            post.setWriter(writer);
+            Member sessionLogin = (Member) currentSessionLogin.sessionLogin();
+            String writer = sessionLogin.getName();
+            post.setWriter(writer);
+            postMapper.save(post);
             return post;
         } else {
            throw new IllegalArgumentException();

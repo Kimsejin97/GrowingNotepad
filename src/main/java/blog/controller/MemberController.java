@@ -8,12 +8,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
@@ -21,7 +23,6 @@ public class MemberController {
     private final MemberRepository memberRepository;
     private final LoginService loginService;
 
-    //회원가입
     @GetMapping("/join")
     public String joinForm(@ModelAttribute("member") Member member) {
         return "login/signUp";
@@ -32,6 +33,7 @@ public class MemberController {
                        BindingResult bindingResult,
                        HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
             return "login/signUp";
         }
         memberRepository.save(member);

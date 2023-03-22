@@ -1,11 +1,11 @@
-package blog.controller.login;
+package blog.domain.model.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class LoginForm {
+public class LoginMemberDto {
 
     @NotEmpty
     private String email;

@@ -1,5 +1,6 @@
-package blog.controller.login;
+package blog.controller;
 
+import blog.domain.model.dto.LoginMemberDto;
 import blog.service.LoginService;
 import blog.domain.model.Member;
 import blog.constants.SessionConst;
@@ -18,22 +19,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
-    //추후에 스프링 시큐리티를 이용해 구현해 보기 TODO
 
     private final LoginService loginService;
 
     @GetMapping("/login")
-    public String loginForm(@ModelAttribute("loginForm") LoginForm form) {
+    public String loginForm(@ModelAttribute("loginForm") LoginMemberDto form) {
         return "login/signIn";
     }
 
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute("loginForm") LoginForm form, BindingResult bindingResult,
+    public String login(@Valid @ModelAttribute("loginForm") LoginMemberDto form,
+                        BindingResult bindingResult,
                         HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
             return "login/signIn";
         }
-
         Member loginMember = loginService.login(form.getEmail(), form.getPassword());
         if (loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
@@ -42,8 +43,6 @@ public class LoginController {
         //로그인 성공
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-        Object test = session.getAttribute(SessionConst.LOGIN_MEMBER);
-        log.info(String.valueOf(test));
         return "redirect:/blog/home";
     }
 

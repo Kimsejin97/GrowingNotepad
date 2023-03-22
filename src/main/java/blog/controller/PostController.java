@@ -24,18 +24,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class PostController {
     private final PostService postService;
 
-    //상세
     @GetMapping("/blog/post/{postId}")
     public String post(@PathVariable Long postId, Model model, @Login Member loginMember){
         Post post = postService.findById(postId);
-        if (loginMember.getName() == post.getWriter()) {
+        if (loginMember.getName().equals(post.getWriter())) {
             model.addAttribute("edit", true);
         }
         model.addAttribute("post",post);
         return "post/post";
     }
 
-    //저장
     @GetMapping("/blog/add")
     public String addPostOpen(){
         return "post/addPost";
@@ -44,12 +42,7 @@ public class PostController {
     @PostMapping("/blog/add")
     public String addPost(@Valid @ModelAttribute("post") Post post,
                           BindingResult bindingResult,
-                          @Login Member loginMember,
                           RedirectAttributes redirectAttributes) {
-
-        String writer = loginMember.getName();
-        post.setWriter(writer);
-
         if(bindingResult.hasErrors()){
             log.info("errors={}", bindingResult);
             return "post/addPost";
@@ -60,7 +53,6 @@ public class PostController {
         return "redirect:/blog/post/{postId}";
     }
 
-    //수정
     @GetMapping("/blog/post/{postId}/edit")
     public String editPostOpen(@PathVariable Long postId,Model model){
         Post post = postService.findById(postId);
@@ -75,7 +67,6 @@ public class PostController {
         return "redirect:/blog/post/{postId}";
     }
 
-    //삭제
     @GetMapping("/blog/post/{postId}/delete")
     public String deletePost(@PathVariable Long postId,Model model){
         postService.deleteById(postId);
