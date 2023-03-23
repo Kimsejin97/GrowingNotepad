@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blog.domain.repository.MemberMapper">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO member(name, email, password)
+        VALUES (#{name}, #{email}, #{password})
+    </insert>
+
+    <select id="findById" resultType="Member">
+        select *
+        from member
+        where id=#{id}
+    </select>
+
+    <select id="findByLoginEmail" resultType="Member">
+        select *
+        from member
+        where email=#{email}
+    </select>
+
+    <select id="findAll" resultType="Member">
+        select *
+        from member
+    </select>
+
+</mapper>

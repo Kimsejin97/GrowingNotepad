@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -29,6 +30,21 @@ public class HomeController {
         model.addAttribute("member", loginMember);
         return "home";
     }
+
+//    @GetMapping("/blog/visitorHome")
+//    public String listPosts(Model model,
+//                            @RequestParam(defaultValue = "1") int page,
+//                            @RequestParam(defaultValue = "5") int size) {
+//        List<Post> posts = postService.findPostsByPage(page, size);
+//        int totalPosts = postService.countAllPosts();
+//        int totalPages = (int) Math.ceil((double) totalPosts / size);
+//
+//        model.addAttribute("posts", posts);
+//        model.addAttribute("totalPages", totalPages);
+//        model.addAttribute("currentPage", page);
+//
+//        return "visitorHome";
+//    }
 
     @GetMapping("/blog/visitorHome")
     public String visitor(Model model) {

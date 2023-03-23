@@ -2,8 +2,8 @@ package blog.controller;
 
 import blog.service.LoginService;
 import blog.domain.model.Member;
-import blog.domain.repository.MemberRepository;
 import blog.constants.SessionConst;
+import blog.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final LoginService loginService;
 
     @GetMapping("/join")
@@ -36,7 +36,7 @@ public class MemberController {
             log.info("errors={}", bindingResult);
             return "login/signUp";
         }
-        memberRepository.save(member);
+        memberService.save(member);
         Member loginMember = loginService.login(member.getEmail(), member.getPassword());
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);

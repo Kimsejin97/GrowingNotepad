@@ -6,8 +6,8 @@
     </settings>
     <typeAliases>
         <typeAlias type="blog.domain.model.Post" alias="Post"/>
+        <typeAlias type="blog.domain.model.Member" alias="Member"/>
     </typeAliases>
-
 
 <!--    <mappers>-->
 <!--        <mapper resource="mapper/PostMapper.xml"/>-->

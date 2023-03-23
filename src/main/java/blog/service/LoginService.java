@@ -1,7 +1,6 @@
 package blog.service;
 
 import blog.domain.model.Member;
-import blog.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,11 +8,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LoginService {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     //return null 로그인실패
     public Member login(String email, String password) {
-        return memberRepository.findByLoginEmail(email)
+        return memberService.findByLoginEmail(email)
                 .filter(m -> m.getPassword().equals(password))
                 .orElse(null);
     }

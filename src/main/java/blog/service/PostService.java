@@ -1,7 +1,5 @@
 package blog.service;
 
-import blog.config.CurrentSessionLogin;
-import blog.domain.model.Member;
 import blog.domain.model.Post;
 import blog.domain.model.dto.UpdatePostDto;
 import blog.domain.repository.PostMapper;
@@ -20,14 +18,10 @@ import java.util.List;
 public class PostService {
 
     private final PostMapper postMapper;
-    private final CurrentSessionLogin currentSessionLogin;
 
-    public Post save(Post post) {
+    public Post save(Post post, String writer) {
+        post.setWriter(writer);
         if (postMapper.save(post) == 1) {
-            Member sessionLogin = (Member) currentSessionLogin.sessionLogin();
-            String writer = sessionLogin.getName();
-            post.setWriter(writer);
-            postMapper.save(post);
             return post;
         } else {
            throw new IllegalArgumentException();
@@ -58,5 +52,14 @@ public class PostService {
 
     public List<Post> findAll() {
         return postMapper.findAll();
+    }
+
+    public List<Post> findPostsByPage(int page, int size) {
+        int start = (page - 1) * size;
+        return postMapper.findAllByPagination(start, size);
+    }
+
+    public int countAllPosts() {
+        return postMapper.countAll();
     }
 }

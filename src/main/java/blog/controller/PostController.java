@@ -1,9 +1,9 @@
 package blog.controller;
 
+import blog.config.etc.CurrentSessionLogin;
 import blog.domain.model.Member;
 import blog.domain.model.Post;
 import blog.config.argumentresolver.Login;
-import blog.domain.model.dto.RequestPostDto;
 import blog.domain.model.dto.UpdatePostDto;
 import blog.service.PostService;
 import jakarta.validation.Valid;
@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequiredArgsConstructor
 public class PostController {
+
     private final PostService postService;
 
     @GetMapping("/blog/post/{postId}")
@@ -42,12 +43,13 @@ public class PostController {
     @PostMapping("/blog/add")
     public String addPost(@Valid @ModelAttribute("post") Post post,
                           BindingResult bindingResult,
+                          @Login Member loginMember,
                           RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()){
             log.info("errors={}", bindingResult);
             return "post/addPost";
         }
-        Post savePost = postService.save(post);
+        Post savePost = postService.save(post,loginMember.getName());
         redirectAttributes.addAttribute("postId", savePost.getId());
         redirectAttributes.addAttribute("status", true);
         return "redirect:/blog/post/{postId}";

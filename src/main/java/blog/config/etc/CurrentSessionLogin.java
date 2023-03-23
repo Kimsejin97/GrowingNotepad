@@ -1,4 +1,4 @@
-package blog.config;
+package blog.config.etc;
 
 import blog.constants.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;

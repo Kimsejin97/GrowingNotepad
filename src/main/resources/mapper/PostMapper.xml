@@ -26,14 +26,33 @@
     </delete>
 
     <select id="findById" resultType="Post">
-        select id, writer, title, context, post_time
+        select *
         from post
         where id=#{id}
     </select>
 
     <select id="findAll" resultType="Post">
-        select id, writer, title, context, post_time
+        select *
         from post
     </select>
+
+    <select id="findAllByPagination" parameterType="map" resultMap="postResultMap">
+        SELECT *
+        FROM post
+        ORDER BY post_time DESC LIMIT #{start}, #{count}
+    </select>
+
+    <select id="countAll">
+        SELECT COUNT(*)
+        FROM post
+    </select>
+
+    <resultMap id="postResultMap" type="Post">
+        <id property="id" column="id" />
+        <result property="writer" column="writer" />
+        <result property="title" column="title" />
+        <result property="context" column="context" />
+        <result property="postTime" column="postTime" />
+    </resultMap>
 
 </mapper>

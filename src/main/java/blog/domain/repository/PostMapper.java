@@ -17,5 +17,7 @@ public interface PostMapper {
     int clear();
     Post findById(Long id);
     List<Post> findAll();
+    List<Post> findAllByPagination(@Param("start") int start, @Param("count") int count);
+    int countAll();
 
 }

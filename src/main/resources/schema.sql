@@ -1,0 +1,21 @@
+DROP TABLE IF EXISTS member;
+DROP TABLE IF EXISTS post;
+
+CREATE TABLE member (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT email_unique UNIQUE (email)
+);
+
+CREATE TABLE post (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    writer VARCHAR(255),
+    title VARCHAR(255) NOT NULL,
+    context VARCHAR(255) NOT NULL,
+    post_time TIMESTAMP
+);
+
+
