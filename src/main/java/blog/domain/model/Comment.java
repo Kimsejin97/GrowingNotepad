@@ -8,26 +8,26 @@ import lombok.ToString;
 import java.time.LocalDateTime;
 
 @Getter @Setter @ToString
-public class Post {
+public class Comment {
 
     private Long id;
+
+    private Long postId;
 
     private String writer;
 
     @NotBlank
-    private String title;
-
-    @NotBlank
     private String content;
 
-    private LocalDateTime postTime;
+    private LocalDateTime createDate;
 
-    public Post(){}
+    public Comment(){}
 
-    public Post(String writer,String title, String content, LocalDateTime postTime) {
+    public Comment(Long id, Long postId, String writer, String content, LocalDateTime createDate) {
+        this.id = id;
+        this.postId = postId;
         this.writer = writer;
-        this.title = title;
         this.content = content;
-        this.postTime = postTime;
+        this.createDate = createDate;
     }
 }

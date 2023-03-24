@@ -20,12 +20,12 @@
             <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해 주세요" th:value="${post.title}">
         </div>
         <div class="mb-3">
-            <label for="context" class="form-label" >Content</label>
-            <div id="context" style="height:500px;" name="context" th:text="${post.context}"></div>
-            <textarea name="context" style="display:none"></textarea>
+            <label for="content" class="form-label" >Content</label>
+            <div id="content" style="height:500px;" name="content" th:text="${post.content}"></div>
+            <textarea name="content" style="display:none"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">저장</button>
-        <button type="button" class="btn btn-secondary"
+        <button type="submit" class="btn btn-outline-primary">저장</button>
+        <button type="button" class="btn btn-outline-secondary"
                 th:onclick="|location.href='@{/blog/home}'|"
                 onclick="location.href='../home.html'">취소</button>
     </form>
@@ -36,18 +36,18 @@
 <script th:src="@{/js/quill.js}"
         src="/static/js/quill.js"></script>
 <script th:inline="javascript">
-    var quill = new Quill('#context', {
+    var quill = new Quill('#content', {
         theme: 'snow',
         readable: true,
         writable: true
     });
 
-    quill.root.innerHTML = [[${post.context}]];
+    quill.root.innerHTML = [[${post.content}]];
 
     var form = document.querySelector('form');
     form.onsubmit = function(e) {
-        var context = document.querySelector('textarea[name=context]');
-        context.value = quill.root.innerHTML;
+        var content = document.querySelector('textarea[name=content]');
+        content.value = quill.root.innerHTML;
     };
 </script>
 </body>

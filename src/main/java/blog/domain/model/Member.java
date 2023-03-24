@@ -17,6 +17,6 @@ public class Member {
     @NotEmpty
     private String email; //로그인 이메일
     @NotEmpty
-    @Size(min = 8, message = "8자리 이상 문자를 입력해주세요.")
+    @Size(min = 8)
     private String password; //로그인 비밀번호
 }

@@ -20,6 +20,7 @@ public class PostService {
     private final PostMapper postMapper;
 
     public Post save(Post post, String writer) {
+        post.setPostTime(LocalDateTime.now());
         post.setWriter(writer);
         if (postMapper.save(post) == 1) {
             return post;
@@ -31,7 +32,7 @@ public class PostService {
     public void update(long id, UpdatePostDto updateParam) {
         Post post = postMapper.findById(id);
         post.setTitle(updateParam.getTitle());
-        post.setContext(updateParam.getContext());
+        post.setContent(updateParam.getContent());
         post.setPostTime(LocalDateTime.now());
         if (postMapper.update(id, post) != 1) {
             throw new IllegalArgumentException();

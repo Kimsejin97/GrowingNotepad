@@ -14,7 +14,7 @@ CREATE TABLE post (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     writer VARCHAR(255),
     title VARCHAR(255) NOT NULL,
-    context VARCHAR(255) NOT NULL,
+    content VARCHAR(255) NOT NULL,
     post_time TIMESTAMP
 );
 

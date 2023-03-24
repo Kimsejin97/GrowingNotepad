@@ -51,7 +51,7 @@ public class PostController {
         }
         Post savePost = postService.save(post,loginMember.getName());
         redirectAttributes.addAttribute("postId", savePost.getId());
-        redirectAttributes.addAttribute("status", true);
+//        redirectAttributes.addAttribute("status", true);
         return "redirect:/blog/post/{postId}";
     }
 
@@ -72,7 +72,7 @@ public class PostController {
     @GetMapping("/blog/post/{postId}/delete")
     public String deletePost(@PathVariable Long postId,Model model){
         postService.deleteById(postId);
-        model.addAttribute("deleteStatus", true);
+//        model.addAttribute("deleteStatus", true);
         return "redirect:/blog/home";
     }
 }

@@ -12,12 +12,12 @@ public class RequestPostDto {
     private String title;
 
     @NotBlank
-    private String context;
+    private String content;
 
     public RequestPostDto(){}
 
-    public RequestPostDto(String title, String context) {
+    public RequestPostDto(String title, String content) {
         this.title = title;
-        this.context = context;
+        this.content = content;
     }
 }

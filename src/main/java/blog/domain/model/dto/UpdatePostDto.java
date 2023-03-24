@@ -12,15 +12,15 @@ public class UpdatePostDto {
     private String title;
 
     @NotBlank
-    private String context;
+    private String content;
 
     private LocalDateTime postTime;
 
     public UpdatePostDto(){}
 
-    public UpdatePostDto(String title, String context, LocalDateTime postTime) {
+    public UpdatePostDto(String title, String content, LocalDateTime postTime) {
         this.title = title;
-        this.context = context;
+        this.content = content;
         this.postTime = postTime;
     }
 }

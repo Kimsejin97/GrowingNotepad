@@ -15,59 +15,66 @@
 <div th:replace="/fragments/nav :: nav" />
 
 <div class="container">
-<!--    <h2 th:if=${param.status}" th:text="'저장 완료!'"></h2>-->
-<br>
-    <article>
-        <h2 class="mb-1" th:text="${post.title}">타이틀</h2>
-        <div class="mb-3 text-muted" th:text="${#temporals.format(post.postTime,'yyyy-MM-dd HH:mm:ss')}">게시일</div>
-        <hr>
-        <div id="quill-viewer" th:text="${post.context}" style="height:500px;">본문내용</div>
-    </article>
     <br>
-    <div class="row" th:if="${edit}">
-        <div class="col">
-            <button class="w-100 btn btn-primary btn-lg"
+    <h2 class="mb-1" th:text="${post.title}">타이틀</h2>
+    <div class="mb-3 text-muted" th:text="${#temporals.format(post.postTime,'yyyy-MM-dd HH:mm:ss')}">게시일</div>
+    <div class="mb-3 text-muted" th:text="${post.writer}">작성자</div>
+    <hr>
+    <article class="mb-4" style="height:300px;">
+        <p th:utext="${post.content}">본문내용</p>
+    </article>
+    <br><hr><br>
+
+<!--    댓글 등록 창 -->
+    <form th:object="${comments}" method="post">
+        <div class="form-group">
+            <label for="commentContent">댓글 작성</label>
+            <textarea class="form-control" id="commentContent" rows="3"
+                      th:field="*{content}" required></textarea>
+        </div>
+        <input type="hidden" name="postId" th:field="*{postId}">
+        <button type="submit" class="btn btn-outline-primary">댓글 등록</button>
+    </form>
+
+<!--    댓글 목록-->
+    <div class="mt-4">
+        <h3>댓글</h3>
+        <hr>
+        <div th:each="comment : ${comments}">
+            <div class="card mb-2">
+                <div class="card-body">
+                    <p class="card-text" th:text="${comment.content}"></p>
+                    <small class="text-muted"
+                           th:text="${comment.writer}+'님의 댓글 ('+
+                           ${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm:ss')} +')'"></small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="row">
+        <div class="col" th:if="${edit}">
+            <button class="w-100 btn btn-outline-primary btn-lg"
                     th:onclick="|location.href='@{/blog/post/{postId}/edit(postId=${post.id})}'|"
                     onclick="location.href='editForm.html'"
                     type="button">메모 수정</button>
         </div>
-        <div class="col">
-            <button class="w-100 btn btn-primary btn-lg"
+        <div class="col" th:if="${edit}">
+            <button class="w-100 btn btn-outline-danger btn-lg"
                     th:onclick="|location.href='@{/blog/post/{postId}/delete(postId=${post.id})}'|"
                     type="button">메모 삭제</button>
         </div>
         <div class="col">
-            <button class="w-100 btn btn-secondary btn-lg"
-                    th:onclick="|location.href='@{/blog/home}'|"
-                    onclick="location.href='../home.html'"
-                    type="button">목록으로</button>
+            <button class="w-100 btn btn-outline-dark btn-lg"
+                th:onclick="|location.href='@{/blog/home}'|"
+                onclick="location.href='../home.html'"
+                type="button">목록으로</button>
         </div>
     </div>
-    <div class="row" th:unless="${edit}">
-        <div class="col">
-            <button class="w-100 btn btn-primary btn-lg"
-                    th:onclick="|location.href='@{/blog/home}'|"
-                    onclick="location.href='../home.html'"
-                    type="button">목록으로</button>
-        </div>
-    </div>
+    <br>
 </div>
 <br>
-
 <div th:replace="/fragments/footer :: footer" />
-<!-- Quill.js JS 추가 -->
-<script th:src="@{/js/quill.js}"
-        src="/static/js/quill.js"></script>
-<script th:inline="javascript">
-    var quill = new Quill('#quill-viewer', {
-        modules: {
-            toolbar: false
-        },
-        readOnly: true,
-        theme: 'snow'
-    });
-
-    quill.root.innerHTML = [[${post.context}]];
-</script>
 </body>
 </html>
