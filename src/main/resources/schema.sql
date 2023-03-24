@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS member;
 DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS comment;
 
 CREATE TABLE member (
     id BIGINT NOT NULL AUTO_INCREMENT,
@@ -17,5 +18,14 @@ CREATE TABLE post (
     content VARCHAR(255) NOT NULL,
     post_time TIMESTAMP
 );
+
+CREATE TABLE comment (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    post_id BIGINT,
+    writer VARCHAR(255),
+    content VARCHAR(255) NOT NULL,
+    created_date TIMESTAMP
+);
+
 
 

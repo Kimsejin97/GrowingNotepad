@@ -8,13 +8,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -23,15 +20,9 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @GetMapping("/blog/post/{postId}/comments")
-    public String getComments(@PathVariable("postId") Long postId, Model model) {
-        List<Comment> comments = commentService.findByPostId(postId);
-        model.addAttribute("comments", comments);
-        return "post/post";
-    }
-
     @PostMapping("/blog/post/{postId}")
-    public String saveComment(@Valid Comment comment,
+    public String saveComment(@PathVariable("postId") Long postId,
+                              @Valid Comment comment,
                               BindingResult bindingResult,
                               @Login Member loginMember,
                               RedirectAttributes redirectAttributes) {
@@ -39,8 +30,9 @@ public class CommentController {
             log.info("errors={}", bindingResult);
             return "post/post";
         }
-        Comment saveComment = commentService.save(comment, loginMember.getName());
-        redirectAttributes.addAttribute("postId", saveComment.getPostId());
-        return "redirect:/blog/post/{postId}";
+        Comment saveComment = commentService.save(comment, postId, loginMember.getName());
+        Long savePostId = saveComment.getPostId();
+        redirectAttributes.addAttribute("postId", savePostId);
+        return "redirect:/blog/post/"+savePostId;
     }
 }

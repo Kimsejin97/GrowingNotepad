@@ -13,8 +13,8 @@
 </head>
 <body>
 <div th:replace="/fragments/nav :: nav" />
-
 <div class="container">
+    <!--블로그 글-->
     <br>
     <h2 class="mb-1" th:text="${post.title}">타이틀</h2>
     <div class="mb-3 text-muted" th:text="${#temporals.format(post.postTime,'yyyy-MM-dd HH:mm:ss')}">게시일</div>
@@ -24,35 +24,31 @@
         <p th:utext="${post.content}">본문내용</p>
     </article>
     <br><hr><br>
-
-<!--    댓글 등록 창 -->
-    <form th:object="${comments}" method="post">
+    <!--    댓글 등록 창 -->
+    <form th:action="@{/blog/post/{postId}(postId=${postId})}" method="post">
         <div class="form-group">
-            <label for="commentContent">댓글 작성</label>
-            <textarea class="form-control" id="commentContent" rows="3"
-                      th:field="*{content}" required></textarea>
+            <label for="content">댓글 작성</label>
+            <textarea class="form-control" id="content" name="content" rows="3"></textarea>
         </div>
-        <input type="hidden" name="postId" th:field="*{postId}">
-        <button type="submit" class="btn btn-outline-primary">댓글 등록</button>
+        <br>
+        <button type="submit" class="btn btn-outline-primary float-end">댓글 등록</button>
     </form>
-
-<!--    댓글 목록-->
+    <br><hr><br>
+    <!--    댓글 목록-->
     <div class="mt-4">
-        <h3>댓글</h3>
-        <hr>
         <div th:each="comment : ${comments}">
             <div class="card mb-2">
                 <div class="card-body">
-                    <p class="card-text" th:text="${comment.content}"></p>
                     <small class="text-muted"
-                           th:text="${comment.writer}+'님의 댓글 ('+
-                           ${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm:ss')} +')'"></small>
-                </div>
+                           th:text="${comment.writer}+'님 댓글 ('+
+                           ${#temporals.format(comment.createdDate, 'yyyy-MM-dd HH:mm:ss')} +')'"></small>
+                    <p class="card-text" th:text="${comment.content}"></p>
+                </div><br>
             </div>
         </div>
     </div>
-
-    <br>
+    <br><hr><br>
+    <!--수정, 삭제, 목록 버튼-->
     <div class="row">
         <div class="col" th:if="${edit}">
             <button class="w-100 btn btn-outline-primary btn-lg"

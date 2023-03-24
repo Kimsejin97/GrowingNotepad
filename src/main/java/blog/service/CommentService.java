@@ -18,8 +18,9 @@ public class CommentService {
 
     private final CommentMapper commentMapper;
 
-    public Comment save(Comment comment, String writer) {
-        comment.setCreateDate(LocalDateTime.now());
+    public Comment save(Comment comment, Long postId, String writer) {
+        comment.setPostId(postId);
+        comment.setCreatedDate(LocalDateTime.now());
         comment.setWriter(writer);
         if (commentMapper.save(comment) == 1) {
             return comment;
@@ -30,6 +31,14 @@ public class CommentService {
 
     public List<Comment> findByPostId(Long postId) {
         return commentMapper.findByPostId(postId);
+    }
+
+    public void deleteByPostId(Long postId) {
+        if (commentMapper.findByPostId(postId).stream().count() >= 1) {
+            commentMapper.deleteByPostId(postId);
+        } else {
+            log.info("requested to delete Post postId - {} comment. but, no such comment", postId);
+        }
     }
 
 }

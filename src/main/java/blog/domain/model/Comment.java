@@ -19,15 +19,15 @@ public class Comment {
     @NotBlank
     private String content;
 
-    private LocalDateTime createDate;
+    private LocalDateTime createdDate;
 
     public Comment(){}
 
-    public Comment(Long id, Long postId, String writer, String content, LocalDateTime createDate) {
+    public Comment(Long id, Long postId, String writer, String content, LocalDateTime createdDate) {
         this.id = id;
         this.postId = postId;
         this.writer = writer;
         this.content = content;
-        this.createDate = createDate;
+        this.createdDate = createdDate;
     }
 }

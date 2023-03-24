@@ -2,7 +2,6 @@ package blog.domain.repository;
 
 import blog.domain.model.Comment;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,7 +10,8 @@ import java.util.List;
 @Mapper
 public interface CommentMapper {
 
-    int save(@Param("comment") Comment comment);
-    List<Comment> findByPostId(@Param("postId") Long postId);
+    int save(Comment comment);
+    List<Comment> findByPostId(Long postId);
+    int deleteByPostId(Long postId);
 
 }
