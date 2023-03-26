@@ -10,6 +10,12 @@
     <link rel="stylesheet"
           th:href="@{/css/quill.snow.css}"
           href="/static/css/quill.snow.css" >
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="/fragments/nav :: nav" />
@@ -17,7 +23,8 @@
     <form action="post.html" th:action method="post">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해 주세요" th:value="${post.title}">
+            <input type="text" class="form-control" id="title" name="title"
+                   placeholder="제목을 입력해 주세요" th:value="${post.title}" required>
         </div>
         <div class="mb-3">
             <label for="content" class="form-label" >Content</label>
@@ -41,13 +48,20 @@
         readable: true,
         writable: true
     });
-
     quill.root.innerHTML = [[${post.content}]];
-
+    function isEditorContentEmpty() {
+        var editorContent = quill.root.innerHTML.trim();
+        return editorContent === '<p><br></p>' || editorContent === '';
+    }
     var form = document.querySelector('form');
     form.onsubmit = function(e) {
         var content = document.querySelector('textarea[name=content]');
         content.value = quill.root.innerHTML;
+        if (isEditorContentEmpty()) {
+            alert('본문을 입력해주세요.');
+            e.preventDefault();
+            return false;
+        }
     };
 </script>
 </body>

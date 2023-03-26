@@ -36,6 +36,16 @@ public class MemberController {
             log.info("errors={}", bindingResult);
             return "login/signUp";
         }
+        // 중복된 이름인지 확인
+        if (memberService.findByName(member.getName()) != null) {
+            bindingResult.rejectValue("name", "duplicate.name");
+            return "login/signUp";
+        }
+        // 중복된 이메일인지 확인
+        if (memberService.findByEmail(member.getEmail()) != null) {
+            bindingResult.rejectValue("email", "duplicate.email");
+            return "login/signUp";
+        }
         memberService.save(member);
         Member loginMember = loginService.login(member.getEmail(), member.getPassword());
         HttpSession session = request.getSession();

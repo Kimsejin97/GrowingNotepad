@@ -3,10 +3,12 @@ package blog.controller.post;
 import blog.domain.model.Post;
 import blog.domain.model.dto.UpdatePostDto;
 import blog.service.PostService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,8 +29,8 @@ public class EditPostController {
     }
 
     @PostMapping("/blog/post/{postId}/edit")
-    public String editPost(@PathVariable Long postId,
-                           @ModelAttribute UpdatePostDto post){
+    public String editPost(@ModelAttribute UpdatePostDto post,
+                           @PathVariable Long postId){
         postService.update(postId,post);
         return "redirect:/blog/post/{postId}";
     }

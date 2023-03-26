@@ -10,14 +10,26 @@
     <link rel="stylesheet"
           th:href="@{/css/quill.snow.css}"
           href="/static/css/quill.snow.css" >
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="/fragments/nav :: nav" />
 <div class="container mt-5">
-    <form action="post.html" th:action method="post">
+    <form action="post.html" th:action th:object="${post}" method="post">
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+        </div>
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해 주세요">
+            <input type="text" class="form-control" id="title" name="title"
+                   th:field="*{title}" th:errorclass="field-error"
+                   placeholder="제목을 입력해 주세요">
+            <div class="field-error" th:errors="*{title}" />
         </div>
         <div class="mb-3">
             <label for="content" class="form-label" >Content</label>
@@ -39,12 +51,19 @@
     var quill = new Quill('#content', {
         theme: 'snow'
     });
+    function isEditorContentEmpty() {
+        var editorContent = quill.root.innerHTML.trim();
+        return editorContent === '<p><br></p>' || editorContent === '';
+    }
     var form = document.querySelector('form');
     form.onsubmit = function(e) {
         var content = document.querySelector('textarea[name=content]');
         content.value = quill.root.innerHTML;
-        // console.log("context.value = ", context.value);
-        // e.preventDefault();
+        if (isEditorContentEmpty()) {
+            alert('본문을 입력해주세요.');
+            e.preventDefault();
+            return false;
+        }
     };
 </script>
 </body>

@@ -22,7 +22,7 @@ public class AddPostController {
     private final PostService postService;
 
     @GetMapping("/blog/add")
-    public String addPostOpen(){
+    public String addPostOpen(@ModelAttribute("post") Post post){
         return "post/addPost";
     }
 

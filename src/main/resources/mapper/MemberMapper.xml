@@ -13,6 +13,18 @@
         where id=#{id}
     </select>
 
+    <select id="findByName" resultType="Member">
+        select *
+        from member
+        where name=#{name}
+    </select>
+
+    <select id="findByEmail" resultType="Member">
+        select *
+        from member
+        where email=#{email}
+    </select>
+
     <select id="findByLoginEmail" resultType="Member">
         select *
         from member
@@ -23,5 +35,7 @@
         select *
         from member
     </select>
+
+
 
 </mapper>

@@ -30,6 +30,12 @@ public class MemberService {
         return memberMapper.findById(id);
     }
 
+    public Member findByName(String name) {
+        return memberMapper.findByName(name);
+    }
+
+    public Member findByEmail(String email) { return memberMapper.findByEmail(email); }
+
     public Optional<Member> findByLoginEmail(String email) {
         return findAll().stream()
                 .filter(m -> m.getEmail().equals(email))
