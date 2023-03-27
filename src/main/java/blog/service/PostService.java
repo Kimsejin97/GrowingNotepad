@@ -61,6 +61,6 @@ public class PostService {
     }
 
     public int countAllPosts() {
-        return postMapper.countAll();
+        return postMapper.countAllPosts();
     }
 }

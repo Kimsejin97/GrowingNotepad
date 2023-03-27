@@ -27,17 +27,11 @@ public class AddPostController {
     }
 
     @PostMapping("/blog/add")
-    public String addPost(@Valid @ModelAttribute("post") Post post,
-                          BindingResult bindingResult,
+    public String addPost(@ModelAttribute("post") Post post,
                           @Login Member loginMember,
                           RedirectAttributes redirectAttributes) {
-        if(bindingResult.hasErrors()){
-            log.info("errors={}", bindingResult);
-            return "post/addPost";
-        }
         Post savePost = postService.save(post,loginMember.getName());
         redirectAttributes.addAttribute("postId", savePost.getId());
-//        redirectAttributes.addAttribute("status", true);
         return "redirect:/blog/post/{postId}";
     }
 }

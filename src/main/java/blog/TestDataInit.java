@@ -35,6 +35,8 @@ public class TestDataInit {
         postMapper.save(new Post("테스터","새로운 메모를 만들어보세요", "다양한 글을 저장해보세요.", LocalDateTime.now()));
         postMapper.save(new Post("테스터","새로운 메모를 만들어보세요", "다양한 글을 저장해보세요.", LocalDateTime.now()));
         postMapper.save(new Post("테스터","새로운 메모를 만들어보세요", "다양한 글을 저장해보세요.", LocalDateTime.now()));
+        postMapper.save(new Post("테스터","새로운 메모를 만들어보세요", "다양한 글을 저장해보세요.", LocalDateTime.now()));
+        postMapper.save(new Post("테스터","새로운 메모를 만들어보세요", "다양한 글을 저장해보세요.", LocalDateTime.now()));
 
     }
 

@@ -42,7 +42,7 @@
         ORDER BY post_time DESC LIMIT #{start}, #{count}
     </select>
 
-    <select id="countAll">
+    <select id="countAllPosts" resultType="int">
         SELECT COUNT(*)
         FROM post
     </select>

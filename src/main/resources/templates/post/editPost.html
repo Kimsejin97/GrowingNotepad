@@ -10,12 +10,6 @@
     <link rel="stylesheet"
           th:href="@{/css/quill.snow.css}"
           href="/static/css/quill.snow.css" >
-    <style>
-        .field-error {
-            border-color: #dc3545;
-            color: #dc3545;
-        }
-    </style>
 </head>
 <body>
 <div th:replace="/fragments/nav :: nav" />
@@ -24,11 +18,11 @@
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control" id="title" name="title"
-                   placeholder="제목을 입력해 주세요" th:value="${post.title}" required>
+                   placeholder="제목을 입력해 주세요" th:value="${post.title}" >
         </div>
         <div class="mb-3">
             <label for="content" class="form-label" >Content</label>
-            <div id="content" style="height:500px;" name="content" th:text="${post.content}"></div>
+            <div id="content" style="height:500px;" name="content" th:utext="${post.content}"></div>
             <textarea name="content" style="display:none"></textarea>
         </div>
         <button type="submit" class="btn btn-outline-primary">저장</button>
@@ -48,17 +42,27 @@
         readable: true,
         writable: true
     });
-    quill.root.innerHTML = [[${post.content}]];
-    function isEditorContentEmpty() {
+    function isFormEmpty() {
+        var title = document.querySelector('input[name=title]');
+        var content = document.querySelector('textarea[name=content]');
         var editorContent = quill.root.innerHTML.trim();
-        return editorContent === '<p><br></p>' || editorContent === '';
+        if (title.value.trim() === '') {
+            alert('제목을 입력해주세요.');
+            title.focus();
+            return true;
+        }
+        if (editorContent === '<p><br></p>' || editorContent === '') {
+            alert('본문을 입력해주세요.');
+            content.focus();
+            return true;
+        }
+        return false;
     }
     var form = document.querySelector('form');
     form.onsubmit = function(e) {
         var content = document.querySelector('textarea[name=content]');
         content.value = quill.root.innerHTML;
-        if (isEditorContentEmpty()) {
-            alert('본문을 입력해주세요.');
+        if (isFormEmpty()) {
             e.preventDefault();
             return false;
         }
