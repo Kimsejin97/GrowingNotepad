@@ -39,7 +39,7 @@
         <div class="col-md-4">
             <h3>Chat</h3>
             <div class="card">
-                <div id="chat" style="height: 500px; overflow: auto;"></div>
+                <div id="chat" style="height: 500px; overflow-y: scroll;"></div>
                 <div class="form-group">
                     <div class="input-group">
                         <input id="message" class="form-control" type="text">
@@ -58,6 +58,7 @@
     var socket = new WebSocket('ws://' + window.location.host + "/chat");
     var sendButton = document.getElementById('messageSend');
     var chat = document.getElementById('chat');
+    var name;
 
     function saveMessage(message) {
         var chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
@@ -69,13 +70,22 @@
         var chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
         for (var i = 0; i < chatHistory.length; i++) {
             var message = chatHistory[i];
-            chat.innerHTML += '<p>' + message + '</p>';
+            chat.innerHTML += '<div>' + message + '</div>';
         }
         chat.scrollTop = chat.scrollHeight;
     }
 
+
+    function saveName(name) {
+        localStorage.setItem('name', name);
+    }
+
+    function loadName() {
+        name = localStorage.getItem('name');
+    }
+
     socket.addEventListener('message', function(e) {
-        chat.innerHTML += '<p>' + e.data + '</p>';
+        chat.innerHTML += '<div>' + e.data + '</div>';
         chat.scrollTop = chat.scrollHeight;
         saveMessage(e.data);
     });
