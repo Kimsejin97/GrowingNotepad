@@ -24,30 +24,31 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         String currentSessionId = (String) session.getAttributes().get("HTTP.SESSION.ID");
         String sessionName = nicknameMap.get(currentSessionId);
-        String name = null;
+        String name;
         if (sessionName == null) {
             name = "익명" + new Random().nextInt(10000);
             log.info("name1 = {}", name);
             nicknameMap.put(currentSessionId, name);
+            client.put(session.getId(), session);
             broadcast(name + "님이 입장하셨습니다.");
         } else {
             name = sessionName;
             log.info("name2 = {}", name);
+            client.put(session.getId(), session);
         }
-        client.put(session.getId(), session);
+//        session.getAttributes().put("name", name);
     }
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        String currentSessionId = (String) session.getAttributes().get("HTTP.SESSION.ID");
-        String name = nicknameMap.get(currentSessionId);
-        client.remove(session.getId());
-        broadcast(name+"님이 나가셨습니다.");
+//        String name = (String) session.getAttributes().get("name");
+//        broadcast(name+"님이 나가셨습니다.");
+//        nicknameMap.remove(name);
+//        client.remove(session.getId());
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        String currentSessionId = (String) session.getAttributes().get("HTTP.SESSION.ID");
-        String name = nicknameMap.get(currentSessionId);
+        String name = (String) session.getAttributes().get("name");
         String chatMessage = message.getPayload();
         broadcast(name+": "+chatMessage);
     }
@@ -55,6 +56,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     private void broadcast(String message) throws Exception {
         TextMessage textMessage = new TextMessage(message);
         for (WebSocketSession session : client.values()) {
+            log.info(String.valueOf(textMessage));
             session.sendMessage(textMessage);
         }
     }
