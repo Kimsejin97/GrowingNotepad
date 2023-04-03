@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS member;
 DROP TABLE IF EXISTS post;
 DROP TABLE IF EXISTS comment;
+-- DROP TABLE IF EXISTS chat;
 
 CREATE TABLE member (
     id BIGINT NOT NULL AUTO_INCREMENT,
@@ -26,6 +27,15 @@ CREATE TABLE comment (
     content VARCHAR(255) NOT NULL,
     created_date TIMESTAMP
 );
+
+-- CREATE TABLE chat (
+--     id BIGINT NOT NULL AUTO_INCREMENT,
+--     name VARCHAR(50) NOT NULL,
+--     message VARCHAR(1000) NOT NULL,
+--     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+--     PRIMARY KEY (id)
+-- );
+
 
 
 

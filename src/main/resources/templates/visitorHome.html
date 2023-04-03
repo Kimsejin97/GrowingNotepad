@@ -66,12 +66,15 @@
     }
 
     function showChatHistory() {
-        var chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
-        for (var i = 0; i < chatHistory.length; i++) {
-            var message = chatHistory[i];
-            chat.innerHTML += '<div>' + message + '</div>';
-        }
-        chat.scrollTop = chat.scrollHeight;
+        fetch('/chat/history')
+            .then(response => response.json())
+            .then(chatHistory => {
+                chat.innerHTML = '';
+                chatHistory.forEach(message => {
+                    chat.innerHTML += '<div>' + message + '</div>';
+                });
+                chat.scrollTop = chat.scrollHeight;
+            });
     }
 
     socket.addEventListener('message', function(e) {
@@ -85,6 +88,21 @@
         socket.send(message.value);
         message.value = '';
     });
+
+    function clearChatHistory() {
+        var chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
+        var now = new Date().getTime();
+        var oneDayAgo = now - (24 * 60 * 60 * 1000);
+        chatHistory = chatHistory.filter(function (message) {
+            var timestamp = message.timestamp;
+            return timestamp >= oneDayAgo;
+        });
+        localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+    }
+
+    setInterval(clearChatHistory, 24 * 60 * 60 * 1000); //24시간마다 로컬스토리지 삭제
+
+
 
     showChatHistory();
 </script>
