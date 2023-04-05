@@ -8,19 +8,33 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Slf4j
 @Controller
+@RequestMapping("/blog/post/{postId}/comment")
 @RequiredArgsConstructor
 public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/blog/post/{postId}")
+//    @GetMapping
+//    public String showComment(@PathVariable("postId") Long postId,
+//                              Model model) {
+//        List<Comment> comments = commentService.findByPostId(postId);
+//        model.addAttribute("comments", comments);
+//        return "redirect:/blog/post/"+postId;
+//    }
+
+    @PostMapping("/save")
     public String saveComment(@PathVariable("postId") Long postId,
                               @Valid Comment comment,
                               BindingResult bindingResult,
@@ -34,5 +48,16 @@ public class CommentController {
         Long savePostId = saveComment.getPostId();
         redirectAttributes.addAttribute("postId", savePostId);
         return "redirect:/blog/post/"+savePostId;
+    }
+
+    @PostMapping("/delete/{commentId}")
+    public String deleteComment(@PathVariable("postId") Long postId,
+                                @PathVariable("commentId") Long commentId,
+                                @Login Member loginMember) {
+        Comment comment = commentService.findByCommentId(commentId);
+        if (loginMember.getName().equals(comment.getWriter())) {
+            commentService.deleteByCommentId(commentId);
+        }
+        return "redirect:/blog/post/"+postId;
     }
 }

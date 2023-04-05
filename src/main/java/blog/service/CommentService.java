@@ -33,6 +33,10 @@ public class CommentService {
         return commentMapper.findByPostId(postId);
     }
 
+    public Comment findByCommentId(Long commentId) {
+        return commentMapper.findByCommentId(commentId);
+    }
+
     public void deleteByPostId(Long postId) {
         if (commentMapper.findByPostId(postId).stream().count() >= 1) {
             commentMapper.deleteByPostId(postId);
@@ -41,4 +45,7 @@ public class CommentService {
         }
     }
 
+    public void deleteByCommentId(Long commentId) {
+            commentMapper.deleteByCommentId(commentId);
+    }
 }

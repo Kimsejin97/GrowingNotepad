@@ -12,6 +12,8 @@ public interface CommentMapper {
 
     int save(Comment comment);
     List<Comment> findByPostId(Long postId);
+    Comment findByCommentId(Long commentId);
     int deleteByPostId(Long postId);
+    int deleteByCommentId(Long commentId);
 
 }
