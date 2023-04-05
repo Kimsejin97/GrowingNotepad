@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -29,6 +30,11 @@ public class PostController {
                        @Login Member loginMember){
         Post post = postService.findById(postId);
         List<Comment> comments = commentService.findByPostId(postId);
+        comments.stream()
+                .forEach(comment -> {
+                    comment.setCheckWriter(comment.getWriter().equals(loginMember.getName()));
+                });
+
         if (loginMember.getName().equals(post.getWriter())) {
             model.addAttribute("edit", true);
         }

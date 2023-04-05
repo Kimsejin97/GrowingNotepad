@@ -43,6 +43,7 @@
                            th:text="${comment.writer}+'님 댓글 ('+
                            ${#temporals.format(comment.createdDate, 'yyyy-MM-dd HH:mm:ss')} +')'"></small>
                     <button type="button" class="btn-close text-danger" aria-label="Close"
+                            th:if="${comment.checkWriter}"
                             th:onclick="'confirmDelete(' + ${postId} + ', ' + ${comment.id} + ')'"></button>
                     <p class="card-text" th:text="${comment.content}"></p>
                 </div><br>

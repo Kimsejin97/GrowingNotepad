@@ -16,6 +16,8 @@ public class Comment {
 
     private String writer;
 
+    private boolean checkWriter;
+
     @NotBlank
     private String content;
 
@@ -30,4 +32,5 @@ public class Comment {
         this.content = content;
         this.createdDate = createdDate;
     }
+
 }
