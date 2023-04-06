@@ -48,9 +48,9 @@
                     <p class="card-text" th:text="${comment.content}"></p>
                 </div><br>
             </div>
-        </div>
+        </div><br>
+        <div th:replace="fragments/pagination :: pagination(url='/blog/post/' + ${postId}, page=${page}, totalPages=${totalPages})"></div>
     </div>
-    <!-- 댓글 목록 -->
     <br><hr><br>
     <!--수정, 삭제, 목록 버튼-->
     <div class="row">

@@ -48,4 +48,13 @@ public class CommentService {
     public void deleteByCommentId(Long commentId) {
             commentMapper.deleteByCommentId(commentId);
     }
+
+    public List<Comment> findCommentsByPostIdWithPagination(Long postId, int page, int size) {
+        int start = (page - 1) * size;
+        return commentMapper.findByPostIdPage(postId, start, size);
+    }
+
+    public int countCommentsByPostId(Long postId) {
+        return commentMapper.countByPostId(postId);
+    }
 }

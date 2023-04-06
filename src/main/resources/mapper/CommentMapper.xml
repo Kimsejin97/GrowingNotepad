@@ -28,4 +28,25 @@
         delete from comment where id = #{id}
     </delete>
 
+    <select id="findByPostIdPage" resultMap="commentResultMap" parameterType="map">
+        SELECT id, post_id, writer, content, created_date
+        FROM comment
+        WHERE post_id = #{postId}
+        ORDER BY created_date DESC LIMIT #{start}, #{count}
+    </select>
+
+    <select id="countByPostId" resultType="int" parameterType="long">
+        SELECT COUNT(*)
+        FROM comment
+        WHERE post_id = #{postId}
+    </select>
+
+    <resultMap id="commentResultMap" type="Comment">
+        <id property="id" column="id" />
+        <result property="postId" column="post_id" />
+        <result property="writer" column="writer" />
+        <result property="content" column="content" />
+        <result property="createdDate" column="created_date" />
+    </resultMap>
+
 </mapper>
