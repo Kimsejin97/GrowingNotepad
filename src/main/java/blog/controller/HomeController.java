@@ -28,7 +28,7 @@ public class HomeController {
                         @RequestParam(defaultValue = "5") int size) {
         //세션에 회원 데이터가 없으면 home
         if (loginMember == null) {
-            return "redirect:/blog/visitorHome";
+            return "redirect:/login";
         }
         //세션이 유지되면 로그인으로 이동
         List<Post> posts = postService.findPostsByPage(page, size);
@@ -40,19 +40,5 @@ public class HomeController {
         model.addAttribute("page", page);
         model.addAttribute("member", loginMember);
         return "home";
-    }
-
-    @GetMapping("/blog/visitorHome")
-    public String listPosts(Model model,
-                            @RequestParam(defaultValue = "1") int page,
-                            @RequestParam(defaultValue = "5") int size) {
-        List<Post> posts = postService.findPostsByPage(page, size);
-        int totalPosts = postService.countAllPosts();
-        int totalPages = (int) Math.ceil((double) totalPosts / size);
-
-        model.addAttribute("posts", posts);
-        model.addAttribute("totalPages", totalPages);
-        model.addAttribute("page", page);
-        return "visitorHome";
     }
 }

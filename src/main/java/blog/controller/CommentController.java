@@ -26,14 +26,6 @@ public class CommentController {
 
     private final CommentService commentService;
 
-//    @GetMapping
-//    public String showComment(@PathVariable("postId") Long postId,
-//                              Model model) {
-//        List<Comment> comments = commentService.findByPostId(postId);
-//        model.addAttribute("comments", comments);
-//        return "redirect:/blog/post/"+postId;
-//    }
-
     @PostMapping("/save")
     public String saveComment(@PathVariable("postId") Long postId,
                               @Valid Comment comment,
