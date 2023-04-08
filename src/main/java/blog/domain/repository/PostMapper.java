@@ -14,10 +14,13 @@ public interface PostMapper {
     int save(Post post);
     int update(@Param("id") Long id, @Param("updateParam") Post updateParam);
     int deleteById(Long id);
-    int clear();
     Post findById(Long id);
-    List<Post> findAll();
-    List<Post> findAllByPagination(@Param("start") int start, @Param("count") int count);
+    List<Post> findAll(@Param("start") int start, @Param("count") int count);
+    List<Post> findPostsByKeyword(
+            @Param("searchField") String searchField,
+            @Param("searchTerm") String searchTerm,
+            @Param("start") int start,
+            @Param("count") int count);
     int countAllPosts();
-
+    int countPostsByKeyword(@Param("searchField") String searchField, @Param("searchTerm") String searchTerm);
 }

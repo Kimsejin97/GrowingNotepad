@@ -17,10 +17,6 @@
         where id=#{id}
     </update>
 
-    <delete id="clear">
-        truncate table post
-    </delete>
-
     <delete id="deleteById">
         delete from post where id=#{id}
     </delete>
@@ -31,20 +27,28 @@
         where id=#{id}
     </select>
 
-    <select id="findAll" resultType="Post">
-        select *
-        from post
-    </select>
-
-    <select id="findAllByPagination" parameterType="map" resultMap="postResultMap">
+    <select id="findAll" parameterType="map" resultMap="postResultMap">
         SELECT *
         FROM post
+        ORDER BY post_time DESC LIMIT #{start}, #{count}
+    </select>
+
+    <select id="findPostsByKeyword" parameterType="map" resultMap="postResultMap">
+        SELECT *
+        FROM post
+        WHERE ${searchField} like concat('%', #{searchTerm}, '%')
         ORDER BY post_time DESC LIMIT #{start}, #{count}
     </select>
 
     <select id="countAllPosts" resultType="int">
         SELECT COUNT(*)
         FROM post
+    </select>
+
+    <select id="countPostsByKeyword" resultType="int">
+        SELECT COUNT(*)
+        FROM post
+        WHERE ${searchField} like concat('%', #{searchTerm}, '%')
     </select>
 
     <resultMap id="postResultMap" type="Post">

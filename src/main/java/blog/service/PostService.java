@@ -43,24 +43,25 @@ public class PostService {
         postMapper.deleteById(id);
     }
 
-    public void clear() {
-        postMapper.clear();
-    }
-
     public Post findById(long id) {
         return postMapper.findById(id);
     }
 
-    public List<Post> findAll() {
-        return postMapper.findAll();
+    public List<Post> findAll(int page, int size) {
+        int start = (page - 1) * size;
+        return postMapper.findAll(start, size);
     }
 
-    public List<Post> findPostsByPage(int page, int size) {
+    public List<Post> findPostsByKeyword(String searchField, String searchTerm, int page, int size) {
         int start = (page - 1) * size;
-        return postMapper.findAllByPagination(start, size);
+        return postMapper.findPostsByKeyword(searchField, searchTerm, start, size);
     }
 
     public int countAllPosts() {
         return postMapper.countAllPosts();
+    }
+
+    public int countPostsByKeyword(String searchField, String searchTerm) {
+        return postMapper.countPostsByKeyword(searchField, searchTerm);
     }
 }
