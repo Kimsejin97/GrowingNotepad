@@ -12,7 +12,7 @@
           href="/static/css/quill.snow.css" >
 </head>
 <body>
-<div th:replace="/fragments/nav :: nav" />
+<div th:replace="fragments/nav :: nav" />
 <div class="container mt-5">
     <form action="post.html" th:action method="post">
         <div class="mb-3">
@@ -32,7 +32,7 @@
     </form>
     <br>
 </div>
-<div th:replace="/fragments/footer :: footer" />
+<div th:replace="fragments/footer :: footer" />
 <!-- Quill text editor JS -->
 <script th:src="@{/js/quill.js}"
         src="/static/js/quill.js"></script>

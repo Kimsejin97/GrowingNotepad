@@ -4,19 +4,15 @@ services:
   database-mysql:
     container_name: database-mysql
     image: mysql:latest
-
     environment:
       MYSQL_ROOT_PASSWORD: 'simple'
       MYSQL_ROOT_HOST: '%'
       MYSQL_DATABASE: 'GN'
-      TZ: Asia/Seoul
-
+      TZ: "Asia/Seoul"
     volumes:
       - ./mysql-init.d:/docker-entrypoint-initdb.d
-
     ports:
       - '13306:3306'
-
     command:
       - '--character-set-server=utf8mb4'
       - '--collation-server=utf8mb4_unicode_ci'

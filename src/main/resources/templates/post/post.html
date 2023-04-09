@@ -12,7 +12,7 @@
           href="/static/css/quill.snow.css" >
 </head>
 <body>
-<div th:replace="/fragments/nav :: nav" />
+<div th:replace="fragments/nav :: nav" />
 <div class="container">
     <!--블로그 글-->
     <br>
@@ -75,7 +75,7 @@
     <br>
 </div>
 <br>
-<div th:replace="/fragments/footer :: footer" />
+<div th:replace="fragments/footer :: footer" />
 <script>
     function confirmDelete(postId, commentId) {
         if (confirm("댓글을 삭제하시겠습니까?")) {
