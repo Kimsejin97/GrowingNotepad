@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 
 @Getter @Setter @ToString
 public class Member {
@@ -13,10 +15,14 @@ public class Member {
     private Long id;
 
     @NotEmpty
-    private String name; //사용자 이름
+    private String name;
+
     @NotEmpty
-    private String email; //로그인 이메일
+    private String email;
+
     @NotEmpty
     @Size(min = 8)
-    private String password; //로그인 비밀번호
+    private String password;
+
+    private Boolean enabled;
 }

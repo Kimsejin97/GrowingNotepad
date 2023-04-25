@@ -1,9 +1,11 @@
 package blog.service;
 
+import blog.domain.model.Authorities;
 import blog.domain.model.Member;
 import blog.domain.repository.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +19,12 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberMapper memberMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public Member save(Member member) {
+        String encodePassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encodePassword);
+        member.setEnabled(true);
         if (memberMapper.save(member) == 1) {
             return member;
         } else {

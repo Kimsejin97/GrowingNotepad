@@ -32,6 +32,7 @@ public class MemberController {
     public String join(@Valid @ModelAttribute("member") Member member,
                        BindingResult bindingResult,
                        HttpServletRequest request) {
+        log.info("join 로직");
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
             return "login/signUp";

@@ -27,24 +27,24 @@ public class LoginController {
         return "login/signIn";
     }
 
-    @PostMapping("/login")
-    public String login(@Valid @ModelAttribute("loginForm") LoginMemberDto form,
-                        BindingResult bindingResult,
-                        HttpServletRequest request) {
-        if (bindingResult.hasErrors()) {
-            log.info("errors={}", bindingResult);
-            return "login/signIn";
-        }
-        Member loginMember = loginService.login(form.getEmail(), form.getPassword());
-        if (loginMember == null) {
-            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
-            return "login/signIn";
-        }
-        //로그인 성공
-        HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-        return "redirect:/blog/home";
-    }
+//    @PostMapping("/login")
+//    public String login(@Valid @ModelAttribute("loginForm") LoginMemberDto form,
+//                        BindingResult bindingResult,
+//                        HttpServletRequest request) {
+//        if (bindingResult.hasErrors()) {
+//            log.info("errors={}", bindingResult);
+//            return "login/signIn";
+//        }
+//        Member loginMember = loginService.login(form.getEmail(), form.getPassword());
+//        if (loginMember == null) {
+//            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+//            return "login/signIn";
+//        }
+//        //로그인 성공
+//        HttpSession session = request.getSession();
+//        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+//        return "redirect:/blog/home";
+//    }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
