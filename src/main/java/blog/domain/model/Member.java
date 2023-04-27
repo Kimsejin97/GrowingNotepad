@@ -24,5 +24,6 @@ public class Member {
     @Size(min = 8)
     private String password;
 
+    private String authority;
     private Boolean enabled;
 }

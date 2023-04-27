@@ -19,7 +19,8 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link"
-             th:href="@{/logout}"
+             th:action="@{/logout}" method="POST"
+             th:href="@{/}"
              href="/index.html">Logout</a>
         </li>
       </ul>
