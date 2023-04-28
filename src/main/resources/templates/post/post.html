@@ -42,9 +42,14 @@
                     <small class="text-muted d-inline"
                            th:text="${comment.writer}+'님 댓글 ('+
                            ${#temporals.format(comment.createdDate, 'yyyy-MM-dd HH:mm:ss')} +')'"></small>
+<!--                    th:onclick="return confirm('댓글을 삭제하시겠습니까?')"-->
+<!--                    th:href="@{/blog/post/{postId}/comment/delete(commentId=${comment.id}, postId=${postId})}"-->
+<!--                    th:onclick="'confirmDelete(' + ${postId} + ', ' + ${comment.id} + ')'"-->
                     <button type="button" class="btn-close text-danger" aria-label="Close"
                             th:if="${comment.checkWriter}"
-                            th:onclick="'confirmDelete(' + ${postId} + ', ' + ${comment.id} + ')'"></button>
+                            th:onclick="'confirmDelete(' + ${postId} + ', ' + ${comment.id} + ')'"
+                    >
+                    </button>
                     <p class="card-text" th:text="${comment.content}"></p>
                 </div><br>
             </div>
@@ -76,10 +81,16 @@
 </div>
 <br>
 <div th:replace="fragments/footer :: footer" />
-<script>
+<script th:inline="javascript">
     function confirmDelete(postId, commentId) {
         if (confirm("댓글을 삭제하시겠습니까?")) {
-            fetch("/blog/post/" + postId + "/comment/delete/" + commentId, {method: "POST"})
+            fetch("/blog/post/" + postId + "/comment/delete/" + commentId, {
+                method: "POST"
+                // headers: {
+                //     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+                //     "XSRF-TOKEN": document.querySelector('meta[name="_csrf"]').content
+                // }
+            })
                 .then(() => location.reload())
                 .catch(err => console.log(err));
         }

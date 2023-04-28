@@ -1,9 +1,8 @@
 package blog.controller;
 
-import blog.constants.SessionConst;
+import blog.config.argumentresolver.SessionConst;
 import blog.domain.model.Member;
 import blog.domain.model.dto.LoginMemberDto;
-import blog.service.LoginService;
 import blog.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class LoginController {
 
     private final MemberService memberService;
-    private final LoginService loginService;
+
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute("loginForm") LoginMemberDto form) {
@@ -54,7 +53,7 @@ public class LoginController {
             return "login/signUp";
         }
         memberService.save(member);
-        Member loginMember = loginService.login(member.getEmail(), member.getPassword());
+        Member loginMember = memberService.login(member.getEmail(), member.getPassword());
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
         return "redirect:/blog/home";

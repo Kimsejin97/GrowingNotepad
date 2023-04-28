@@ -26,6 +26,13 @@ public class MemberService {
         }
     }
 
+    public Member login(String email, String password) {
+        return memberMapper.findByLoginEmail(email)
+                .filter(m -> m.getPassword().equals(password))
+                .orElse(null);
+        //return null 로그인실패
+    }
+
     public Member findById(Long id) {
         return memberMapper.findById(id);
     }
