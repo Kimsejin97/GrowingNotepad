@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Post</title>
     <link rel="stylesheet"
           th:href="@{/css/bootstrap.min.css}"
@@ -42,9 +44,6 @@
                     <small class="text-muted d-inline"
                            th:text="${comment.writer}+'님 댓글 ('+
                            ${#temporals.format(comment.createdDate, 'yyyy-MM-dd HH:mm:ss')} +')'"></small>
-<!--                    th:onclick="return confirm('댓글을 삭제하시겠습니까?')"-->
-<!--                    th:href="@{/blog/post/{postId}/comment/delete(commentId=${comment.id}, postId=${postId})}"-->
-<!--                    th:onclick="'confirmDelete(' + ${postId} + ', ' + ${comment.id} + ')'"-->
                     <button type="button" class="btn-close text-danger" aria-label="Close"
                             th:if="${comment.checkWriter}"
                             th:onclick="'confirmDelete(' + ${postId} + ', ' + ${comment.id} + ')'"
@@ -83,13 +82,15 @@
 <div th:replace="fragments/footer :: footer" />
 <script th:inline="javascript">
     function confirmDelete(postId, commentId) {
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
         if (confirm("댓글을 삭제하시겠습니까?")) {
             fetch("/blog/post/" + postId + "/comment/delete/" + commentId, {
-                method: "POST"
-                // headers: {
-                //     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-                //     "XSRF-TOKEN": document.querySelector('meta[name="_csrf"]').content
-                // }
+                method: "POST",
+                headers: {
+                    [csrfHeader]: csrfToken
+                }
             })
                 .then(() => location.reload())
                 .catch(err => console.log(err));

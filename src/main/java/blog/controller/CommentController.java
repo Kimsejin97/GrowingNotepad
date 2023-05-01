@@ -46,7 +46,6 @@ public class CommentController {
     public String deleteComment(@PathVariable("postId") Long postId,
                                 @PathVariable("commentId") Long commentId,
                                 @Login Member loginMember) {
-        log.info("넘어옴");
         Comment comment = commentService.findByCommentId(commentId);
         if (loginMember.getName().equals(comment.getWriter())) {
             commentService.deleteByCommentId(commentId);

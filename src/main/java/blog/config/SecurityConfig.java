@@ -1,28 +1,19 @@
 package blog.config;
 
-import blog.security.CustomAuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 public class SecurityConfig{
-
-    private final DataSource dataSource;
-    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,7 +27,7 @@ public class SecurityConfig{
                         .loginPage("/login")
                         .usernameParameter("email")
                         .passwordParameter("password")
-                        .successHandler(customAuthenticationSuccessHandler)
+                        .defaultSuccessUrl("/blog/home")
                         .permitAll()
                 )
                 .logout((logout) -> logout
@@ -45,21 +36,10 @@ public class SecurityConfig{
                         .permitAll()
                 )
                 .csrf((csrf) -> csrf
-                        .disable()
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 )
         ;
         return http.build();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService(DataSource dataSource) {
-        String usersByUsernameQuery = "select email,password,enabled from member where email = ?";
-        String authsByUserQuery = "select email, authority from member where email = ?";
-
-        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
-        userDetailsManager.setUsersByUsernameQuery(usersByUsernameQuery);
-        userDetailsManager.setAuthoritiesByUsernameQuery(authsByUserQuery);
-        return userDetailsManager;
     }
 
     @Bean
