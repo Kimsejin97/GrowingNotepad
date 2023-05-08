@@ -9,6 +9,10 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class LoginController {
 
     private final MemberService memberService;
+//    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute("loginForm") LoginMemberDto form) {
@@ -36,11 +41,14 @@ public class LoginController {
     public String join(@Valid @ModelAttribute("member") Member member,
                        BindingResult bindingResult,
                        HttpServletRequest request) {
-        log.info("join 로직");
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
             return "login/signUp";
         }
+
+        // 패스워드 암호화
+//        member.setPassword(passwordEncoder.encode(member.getPassword()));
+
         // 중복된 이름인지 확인
         if (memberService.findByName(member.getName()) != null) {
             bindingResult.rejectValue("name", "duplicate.name");
@@ -51,10 +59,13 @@ public class LoginController {
             bindingResult.rejectValue("email", "duplicate.email");
             return "login/signUp";
         }
+
         memberService.save(member);
-        Member loginMember = memberService.login(member.getEmail(), member.getPassword());
-        HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-        return "redirect:/blog/home";
+
+//        Member loginMember = memberService.login(member.getEmail(), member.getPassword());
+//        HttpSession session = request.getSession();
+//        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+//        return "redirect:/blog/home";
+        return "redirect:/"; // 다시 로그인
     }
 }

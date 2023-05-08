@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -25,6 +26,7 @@ import java.util.List;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -39,8 +41,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
         authorityList.add(new SimpleGrantedAuthority(member.getAuthority()));
 
-
-        return new User(member.getEmail(), member.getPassword(), member.getEnabled(),
+        return new User(member.getEmail(), passwordEncoder.encode(member.getPassword()), member.getEnabled(),
                 true, true, true, authorityList);
     }
 }
